@@ -16,6 +16,6 @@
 // ============================================================
 const { Sequelize } = require('sequelize')
 
-const dbConnection = new Sequelize('postgres://localhost:5432/quotes')
+const db = new Sequelize('postgres://localhost:5432/quotes')
 
-module.exports = dbConnection
+module.exports = db

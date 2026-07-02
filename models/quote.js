@@ -16,3 +16,8 @@
 //
 //   4. Export the model
 // ============================================================
+const { DataTypes } = require('sequelize')
+const { dbConnection } = require('../db/index')
+
+
+
