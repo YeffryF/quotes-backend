@@ -17,7 +17,14 @@
 //   4. Export the model
 // ============================================================
 const { DataTypes } = require('sequelize')
-const { dbConnection } = require('../db/index')
+const dbConnection  = require('../db/index')
 
+const Quote = dbConnection.define('quote', {
+    text: { type: DataTypes.STRING, allowNul: false }, 
+    author: { type: DataTypes.STRING, allowNull: false}
+})
 
+module.exports = Quote
 
+// Explain: id, createdAt, and updatedAt are not in the field list. Where do they come from?
+// These fields are automatically created by the database, when we successfully save an instance
