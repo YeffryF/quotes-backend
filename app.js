@@ -18,9 +18,8 @@ const cors = require('cors')
 
 // ------------------------------------------------------------
 // STEP 1 — Import your database connection and Quote model
-
-
-
+const db = require('./db/index')
+const Quote = require('./models/quote')
 
 
 // Importing Quote here registers it with the connection so
@@ -128,8 +127,9 @@ app.use((error, req, res, next) => {
 async function startApp() {
   // connect to your db here before the express server listens
 
-
+  await db.sync()
   app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
 }
-
+// Explain: what would happen if you called app.listen before db.sync() resolved, and a request came in immediately?
+// You will get incongruency in data. The reason because now you have a server running without actually synching to the db
 startApp()
