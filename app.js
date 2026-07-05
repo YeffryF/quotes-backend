@@ -50,7 +50,7 @@ app.use(cors())          // allows the React frontend to call this server
 // ------------------------------------------------------------
 app.get('/api/quotes', async (req, res, next) => {
   try {
-
+    const quotes = await Quote.findAll();
   } catch (error) {
     next(error)
   }
@@ -69,7 +69,12 @@ app.get('/api/quotes', async (req, res, next) => {
 // ------------------------------------------------------------
 app.post('/api/quotes', async (req, res, next) => {
   try {
-
+    const { text, author } = req.body
+    if(!text || !author) {
+      res.status(404).json({message: "Missing text or author fields"})
+    }
+    const data = await Quote.create({text, author})
+    res.json(data)
   } catch (error) {
     next(error)
   }
@@ -90,12 +95,21 @@ app.post('/api/quotes', async (req, res, next) => {
 // ------------------------------------------------------------
 app.delete('/api/quotes/:id', async (req, res, next) => {
   try {
-
+    const id = Number(req.params.id)
+    const quote = await Quote.findByPk(id)
+    if(!quote) {
+      return res.status(404).json('No such file exist')
+    }
+    await quote.destroy()
+    res.sendStatus(204)
   } catch (error) {
     next(error)
   }
 })
 
+// Explain: DELETE /api/quotes/:id uses req.params.id to get the id. Why do you need to wrap it in Number() before using it with Sequelize?
+// req.params.id is a string so we use Number() to convert the value as it could result in a bug
+// if we send a string to compare the id from the db
 
 // ============================================================
 // STRETCH ROUTES — come back to these after the three above work
