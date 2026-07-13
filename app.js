@@ -31,7 +31,9 @@ const Quote = require('./models/quote')
 
 
 const app = express()
-const PORT = 8080
+require('dotenv').config();
+
+const PORT = process.env.PORT || 3000;
 
 app.use(express.json())  // lets the server read JSON from req.body
 app.use(morgan('dev'))   // logs every incoming request
@@ -51,6 +53,7 @@ app.use(cors())          // allows the React frontend to call this server
 app.get('/api/quotes', async (req, res, next) => {
   try {
     const quotes = await Quote.findAll();
+    res.status(200).json(quotes);
   } catch (error) {
     next(error)
   }
