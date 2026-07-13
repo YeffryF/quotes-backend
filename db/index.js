@@ -16,6 +16,8 @@
 // ============================================================
 require('dotenv').config();
 
+console.log('DATABASE_URL =', process.env.DATABASE_URL);
+
 const { Sequelize } = require('sequelize');
 
 const dbConnection = new Sequelize(process.env.DATABASE_URL, {
