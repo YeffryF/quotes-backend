@@ -37,7 +37,13 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json())  // lets the server read JSON from req.body
 app.use(morgan('dev'))   // logs every incoming request
-app.use(cors())          // allows the React frontend to call this server
+const cors = require("cors");
+
+app.use(
+  cors({
+    origin: "https://quotes-frontend-jet.vercel.app",
+  })
+);          // allows the React frontend to call this server
 
 
 // ============================================================
